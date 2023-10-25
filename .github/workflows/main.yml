@@ -10,8 +10,15 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+
     - name: compile
       run: |
         echo Compiling...
         gcc ./hccapx2cap.c -o hccapx2cap
         echo Done.
+
+    - name: release
+    - uses: actions/create/releases@v3
+      with:
+        tag_name: v1.0.0
+        release_name: Release v1.0.0
