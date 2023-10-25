@@ -1,0 +1,12 @@
+on:
+  workflow_dispatch:
+
+jobs:
+  my_job:
+    name: gcc compile
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: compile
+      run: |
+        gcc hccapx2cap.c -o hccapx2cap
