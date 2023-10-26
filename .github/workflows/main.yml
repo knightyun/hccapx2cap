@@ -2,8 +2,14 @@ name: Compile
 
 on:
   workflow_dispatch:
-  push:
-    branches: master
+    inputs:
+      tag:
+        description: 'Release tag'
+        type: string
+        required: false
+        default: v1.0.0
+  # push:
+  #   branches: master
 
 jobs:
   my_build:
@@ -20,10 +26,10 @@ jobs:
         gcc ./hccapx2cap.c -o hccapx2cap
         echo Done.
 
-    - name: Delete tag and release
+    - name: delete tag and release
       uses: dev-drprasad/delete-tag-and-release@v1.0
       with:
-        tag_name: v1.0.0
+        tag_name: ${{ inputs.tag }}
         github_token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: release
@@ -31,8 +37,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: v1.0.0
-        release_name: Release v1.0.0
+        tag_name: ${{ inputs.tag }}
+        release_name: Release ${{ inputs.tag }}
         body: |
           Changes in this Release
           - None
