@@ -33,6 +33,7 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: release
+      id: create_release
       uses: actions/create-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -44,3 +45,13 @@ jobs:
           - None
         draft: false
         prerelease: false
+
+    - name: upload binary
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./hccapx2cap
+        asset_name: hccapx2cap
+        asset_content_type: application/octet-stream
