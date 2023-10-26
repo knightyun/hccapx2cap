@@ -26,13 +26,17 @@ jobs:
         gcc ./hccapx2cap.c -o hccapx2cap
         echo Done.
 
+    - name: create zip
+      run: |
+        zip -r hccapx2cap.zip ./hccapx2cap
+
     - name: delete tag and release
       uses: dev-drprasad/delete-tag-and-release@v1.0
       with:
         tag_name: ${{ inputs.tag }}
         github_token: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: release
+    - name: create release
       id: create_release
       uses: actions/create-release@v1
       env:
@@ -52,6 +56,9 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./hccapx2cap
-        asset_name: hccapx2cap
-        asset_content_type: application/octet-stream
+        # asset_path: ./hccapx2cap
+        # asset_name: hccapx2cap
+        # asset_content_type: application/octet-stream
+        asset_path: ./hccapx2cap.zip
+        asset_name: hccapx2cap.zip
+        asset_content_type: application/zip
