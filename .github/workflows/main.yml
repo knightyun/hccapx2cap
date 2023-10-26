@@ -2,6 +2,8 @@ name: Compile
 
 on:
   workflow_dispatch:
+  push:
+    branches: master
 
 jobs:
   my_build:
